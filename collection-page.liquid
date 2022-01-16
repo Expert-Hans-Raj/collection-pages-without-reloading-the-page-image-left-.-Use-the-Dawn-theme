@@ -1,0 +1,86 @@
+<div class="collection page-width tab_products">
+  
+  <div class="view-all-btn">
+    <a href="/collections/all">See <span>All</span></a>
+  </div>
+  
+<div class="dropdown">  
+  <div class="tab-all-btn toggle">All</div>
+  
+  <div class="tab tab-links-btn dropdown-menu">
+    {% assign count = 0 %}
+    {% for block in section.blocks  %}
+    {% assign count = count | plus: 1 %}
+     {%- assign collection = collections[block.settings.collection] -%}
+    <div class="{% if count == 1 %}active {% endif %}item get-products collection_url" collection_url="{{shop.url}}{{ collection.url }}">
+    <button class="tablinks">{{collection.title}}</button>
+    </div>
+    {% endfor %}
+  </div>
+  </div>
+    <ul id="ajax-product" class="grid grid--2-col product-grid grid--2-col-tablet grid--4-col-desktop negative-margin--small">
+       {% for block in section.blocks  limit:1 %}
+     {%- assign collection = collections[block.settings.collection] -%}
+      <div class="custom-all collection page-width">
+        <ul id="product-grid" data-id="template--14297982599219__product-grid" class="
+          grid grid--2-col negative-margin product-grid
+          
+             grid--3-col-tablet grid--one-third-max grid--4-col-desktop grid--quarter-max
+          ">
+      {% for product in collection.products %}
+      
+    
+         
+          <li pro_url="{{shop.url}}{{ product.url }}" class="get_product grid__item {{section.id}} {{ grid_item_width }}">
+             <img class="motion-reduce"  src="{{product.featured_image| img_url : "original"}}">
+            {% render 'custom-card',
+            product_card_product: product,
+            media_size: section.settings.image_ratio,
+            show_secondary_image: section.settings.show_secondary_image,
+            add_image_padding: section.settings.add_image_padding,
+            show_vendor: section.settings.show_vendor,
+            show_image_outline: section.settings.show_image_outline,
+            show_rating: section.settings.show_rating
+          %}
+            </li>
+     
+        {% endfor %}
+        </ul>
+         </div>
+      {% endfor %}
+    </ul>
+</div>
+
+
+
+
+{% schema %}
+ {
+   "name": "collection-page",
+   "settings": [],
+   "blocks":[{
+       "name":"content",
+       "type":"text",
+         "settings":[
+        {
+          "type":"collection",
+          "id":"collection",
+          "label":"Add Collection"
+        }
+     ]
+   }
+  ],
+    "presets":[
+   {
+       "name":"collection-page",
+       "category":"collection"
+   }
+ ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
